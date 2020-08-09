@@ -9,7 +9,7 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/code/networks/east.py",
+            "program": "${workspaceFolder}/code/preprocessing/reshape_image_and_bnd_box.py",
             "console": "integratedTerminal"
             
 

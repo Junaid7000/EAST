@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    test_input = torch.randn(1, 3, 512, 512).to(device)
+    test_input = torch.randn(1, 3, 1280, 640).to(device)
     east = EAST(3, batch_norm = True).to(device)
     east.eval()
     with torch.no_grad():

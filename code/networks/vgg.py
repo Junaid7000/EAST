@@ -76,7 +76,7 @@ class VGG(nn.Module):
             if isinstance(m, nn.MaxPool2d):
                 out.append(x)
 
-        return out[1:] #only last 4 layers are used 
+        return out[1:] #feature map from pooling2 to pooling5 extracted 
 
 
 

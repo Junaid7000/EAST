@@ -16,6 +16,7 @@ class Output(nn.Module):
         
         self._initialize_weights()
     
+    
     def _initialize_weights(self):
 
         for m in self.modules():
@@ -24,10 +25,11 @@ class Output(nn.Module):
                 if m.bias is not None:
                     nn.init.constant_(m.bias, 0)
     
+
     def forward(self, x):
 
         score = self.sigmoid1(self.conv1(x))
         loc   = self.sigmoid2(self.conv2(x)) * self.scope
         angle = (self.sigmoid3(self.conv3(x)) - 0.5) * math.pi
-
-        return [score, loc, angle]
+        geo   = torch.cat((loc, angle), 1)
+        return [score, geo]
