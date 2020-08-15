@@ -9,7 +9,6 @@
             "request": "launch",
             "cwd": "${workspaceFolder}/code",
             "program": "${workspaceFolder}/test.py",
-
             "console": "integratedTerminal"
             
 

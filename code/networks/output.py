@@ -3,6 +3,7 @@ from torch import nn
 import traceback
 import math
 
+
 class Output(nn.Module):
     def __init__(self, scope=512):
         super(Output, self).__init__()

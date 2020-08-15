@@ -6,11 +6,12 @@ from torch.utils.data import Dataset
 
 
 class RecieptDataset(Dataset):
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir, box_orientation = None, transform=None):
         super(RecieptDataset, self).__init__()
 
         self.root_dir = root_dir
         self.transform = transform
+        self.box_orientation = box_orientation
 
         #find all image files
         self.image_names = [path for path in os.listdir(self.root_dir) if path.endswith(".jpg")]
@@ -29,7 +30,14 @@ class RecieptDataset(Dataset):
 
         bnd_boxes = []
         for label in label_name:
-            bnd_boxes.append([min(label['x']), min(label['y']), max(label['x']), max(label['y'])])
+
+            if self.box_orientation is not None:
+                #For AABB boxes
+                bnd_boxes.append([min(label['x']), min(label['y']), max(label['x']), max(label['y']), self.box_orientation])
+            else:
+                #TODO: Add support of RBOX
+                bnd_boxes.append([min(label['x']), min(label['y']), max(label['x']), max(label['y'])])
+
         
         bnd_boxes = torch.Tensor(bnd_boxes)
 

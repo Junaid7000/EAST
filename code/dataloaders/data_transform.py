@@ -1,6 +1,8 @@
 from torchvision import transforms, utils
 import torch
 
+#TODO: Add various transforms to the data
+
 
 def basic_transform(img, bnd_boxes):
     

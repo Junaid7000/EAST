@@ -98,6 +98,18 @@ def vgg16(in_channels, pretrained, **kwargs):
 
         state_dict = load_state_dict_from_url(url, progress = True)
         state_dict = remove_classifier_keys(state_dict)
+
+        if in_channels == 1:
+            state_dict = change_state_dict_shape(state_dict, layer_name = "features.0.weight")
+
         model.load_state_dict(state_dict)
 
     return model
+
+
+def change_state_dict_shape(state_dict, layer_name):
+    
+    weight = state_dict[layer_name]
+    state_dict[layer_name] = weight[:, 0, :, :].unsqueeze(1)
+    
+    return state_dict

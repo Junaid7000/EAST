@@ -7,7 +7,7 @@ from .vgg import vgg16
 
 class East(nn.Module):
     def __init__(self, in_channels ,pretrained = True, **kwargs):
-        super(EAST, self).__init__()
+        super(East, self).__init__()
 
         self.feature_extractor = vgg16(in_channels, pretrained, **kwargs)
         self.merger = Merger()
