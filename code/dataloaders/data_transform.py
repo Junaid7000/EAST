@@ -4,13 +4,13 @@ import torch
 #TODO: Add various transforms to the data
 
 
-def basic_transform(img, bnd_boxes):
+def basic_transform(img, labels):
     
     image_transform = transforms.Compose([transforms.ToTensor()])
     bnd_transform = transforms.Compose([transforms.ToTensor()])
 
-    bnd_boxes = torch.Tensor(bnd_boxes)
+    labels = torch.Tensor(labels)
 
     img = image_transform(img)
 
-    return img, bnd_boxes
+    return img, labels

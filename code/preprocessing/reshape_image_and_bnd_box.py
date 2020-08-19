@@ -2,6 +2,8 @@ import cv2
 import os
 import numpy as np
 import json
+from generate_score_geometry_map import create_geometry_map, create_score_map
+
 
 def get_label_dict(label):
 
@@ -84,10 +86,13 @@ def reshape_large_images(image, label_dict):
 
 
 def save_label_dict(label_dict, save_path):
-
     with open(save_path, 'w+') as file:
         json.dump(label_dict, file)
 
+
+def save_output_arrey(array, save_path):
+    with open(save_path, 'wb') as file:
+        np.save(file, array)
 
 def reshape_image_and_bnd_box(image_folder, label_folder, save_folder):
 
@@ -106,19 +111,28 @@ def reshape_image_and_bnd_box(image_folder, label_folder, save_folder):
 
         label_dict, image_ = reshape_large_images(image_, label_dict)
         image_, label_dict = scale_image_and_bnd_boxes(image_, label_dict, new_height, new_width)
-
-        image_save_path = os.path.join(save_folder, image)
-        label_save_path = os.path.join(save_folder, f"{image[:-4]}.json")
-        save_label_dict(label_dict, label_save_path)
-
         #convert to single channel image
         image_ = cv2.cvtColor(image_, cv2.COLOR_BGR2GRAY)
 
-        cv2.imwrite(image_save_path, image_)
-
-
-            
+        bnd_boxes = []
+        for label in label_dict:
+            bnd_boxes.append([min(label['x']), min(label['y']), max(label['x']), max(label['y'])])
         
+        score = create_score_map(image_, bnd_boxes)
+        geometry = create_geometry_map(image_, bnd_boxes)
+        
+        score = np.expand_dims(score, axis=0)
+        output_array = np.concatenate([score, geometry], axis=0)
+
+        print(output_array.shape)
+        
+        image_save_path = os.path.join(save_folder, image)
+        array_save_path = os.path.join(save_folder, f"{image[:-4]}.npy")
+        # label_save_path = os.path.join(save_folder, f"{image[:-4]}.json")
+        # save_label_dict(label_dict, label_save_path)
+        save_output_arrey(output_array, array_save_path)
+
+        cv2.imwrite(image_save_path, image_)
 
 
 
