@@ -12,5 +12,5 @@ def basic_transform(img, labels):
     labels = torch.Tensor(labels)
 
     img = image_transform(img)
-
+    
     return img, labels

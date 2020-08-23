@@ -5,7 +5,7 @@ from postprocessing import torch_nms
 
 root_dir = "E:\\Projects\\2020\\OCR\\EAST\\data\\processed_data"
 
-dataset = RecieptDataset(root_dir, basic_transform)
+dataset = RecieptDataset(root_dir, transform =basic_transform)
 # score_loss = ClassBalanceCrossEntropyLoss()
 east = East(1, batch_norm = True)
 
