@@ -9,7 +9,7 @@ def basic_transform(img, labels):
     image_transform = transforms.Compose([transforms.ToTensor()])
     bnd_transform = transforms.Compose([transforms.ToTensor()])
 
-    labels = torch.Tensor(labels)
+    labels = torch.LongTensor(labels)
 
     img = image_transform(img)
     

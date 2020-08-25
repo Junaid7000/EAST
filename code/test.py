@@ -8,14 +8,14 @@ root_dir = "E:\\Projects\\2020\\OCR\\EAST\\data\\processed_data"
 dataset = RecieptDataset(root_dir, transform =basic_transform)
 # score_loss = ClassBalanceCrossEntropyLoss()
 east = East(1, batch_norm = True)
+criterion = ClassBalanceCrossEntropyLoss()
 
-img, bnd_box = dataset.__getitem__(0)
+img, masks = dataset.__getitem__(0)
 sco, out = east(img.unsqueeze(0))
 
 # out= torch_nms(out, sco, 0.5)
 
-
-
+loss = criterion(sco, masks[0].unsqueeze(0))
 
 
 print(img)
